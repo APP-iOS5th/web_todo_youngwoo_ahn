@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous" />
+    <title>Todo List - YoungwooAhn</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <!-- 제목 start -->
+                <div class="text-center mt-3 mb-3">
+                    <h1>Todo List</h1>
+                </div>
+                <div class="text-sm-end mt-1 mb-1">
+                    <span>안영우</span>
+                </div>
+                <!-- 제목 end -->
+                <!-- Todo 입력창 start -->
+                <div class="input-group mt-3 mb-3">
+                    <input class="form-control" id="todoInput" type="text" placeholder="Input Todo">
+                    <button class="btn btn-primary" id="addTodo">추가</button>
+                </div>
+                <!-- Todo 입력창 end -->
+                <!-- Todo 리스트 start -->
+                <ul class="list-group" id="todoList"></ul>
+                <!-- Todo 리스트 end -->
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+
+        // Event //
+        
+        /*
+            # todolist load (storage)
+            -addEventListener('DOMContentLoaded', ...) : 웹페이지를 로드하는 이벤트 발생시, 실행할 익명함수 내용 설정
+        */
+        document.addEventListener('DOMContentLoaded', function(){
+            loadTodos();
+        })
+
+        /*
+            # todolist store (page -> storage)
+            - addEventListener('click', ...) : add 버튼 클릭 이벤트 발생시, 익명함수 내용 설정
+        */
+        document.getElementById('addTodo').addEventListener('click', function() {
+            var value = document.getElementById('todoInput').value; // 입력창 태그의 html 정보 취득
+            if(value){
+                addTodo(value); // 입력 내용을 page에 추가
+                document.getElementById('todoInput').value=''; // 공백 초기화
+                storeTodos(); // 입력 내용을 storage에 추가
+            }
+        });
+
+
+        // Function //
+        /* 
+            # todolist add (page에 추가) 
+        */  
+        function addTodo(text){
+            var list = document.getElementById('todoList'); // todoList 태그의 html 정보 취득
+            var item = document.createElement('li'); // ul 밑에 넣을 li 태그 미리 생성
+            item.innerText = text; // 로드 or 입력한 todo 내용을 li 태그에 추가
+            item.classList.add('list-group-item'); // li 태그에 부트스트랩 class 추가
+            list.appendChild(item); // todoList인 ul태그 밑에 li 추가
+
+        }
+
+        /* 
+            # todolist store (storage에 저장) 
+        */
+        function storeTodos(){
+            var todos = [];
+            var todoList = document.getElementById('todoList'); // todoList 태그의 html 정보 취득
+            var todoListChildren = todoList.children; // 자식 태그들의 html 정보 취득
+            for (var i=0; i<todoListChildren.length; i++) {
+                todos.push(todoListChildren[i].innerText.trim()); // todoList의 텍스트 취득
+            }
+            console.log(todos); // (값 확인용 로그)
+            localStorage.setItem('todos', JSON.stringify(todos)); // todoList를 JSON 형태로 localStorage에 저장
+        }
+
+        /*
+            # todolist load (storage로 부터 로드)
+            -todos.forEach(...) : todos 값을 순회, 순회하면서 addTodo 함수 실행 (로드한 todoList를 page에 그리기)
+        */
+        function loadTodos(){
+            var todos = JSON.parse(localStorage.getItem('todos'));
+            if(todos){
+                todos.forEach(function(todo){
+                    addTodo(todo)
+                })
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+crossorigin="anonymous"></script>
+</body>
+</html>
