@@ -66,7 +66,7 @@
         function addTodo(text){
             var list = document.getElementById('todoList'); // todoList 태그의 html 정보 취득
             var item = document.createElement('li'); // ul 밑에 넣을 li 태그 미리 생성
-            item.innerText = text; // 로드 or 입력한 todo 내용을 li 태그에 추가
+            item.innerHTML = '<input type="checkbox">&nbsp' + text; // 로드 or 입력한 todo 내용을 li 태그에 추가. checkbox도 innerHTML로 넣음
             item.classList.add('list-group-item'); // li 태그에 부트스트랩 class 추가
             list.appendChild(item); // todoList인 ul태그 밑에 li 추가
 
