@@ -35,8 +35,7 @@
     
     <script>
 
-        // Event //
-        
+        // Event (특정 동작 시, 실행할 함수 설정)//
         /*
             # todolist load (storage)
             -addEventListener('DOMContentLoaded', ...) : 웹페이지를 로드하는 이벤트 발생시, 실행할 익명함수 내용 설정
@@ -47,7 +46,7 @@
 
         /*
             # todolist store (page -> storage)
-            - addEventListener('click', ...) : add 버튼 클릭 이벤트 발생시, 익명함수 내용 설정
+            - addEventListener('click', ...) : add 버튼 클릭 이벤트 발생시, 실행할 익명함수 내용 설정
         */
         document.getElementById('addTodo').addEventListener('click', function() {
             var value = document.getElementById('todoInput').value; // 입력창 태그의 html 정보 취득
@@ -59,14 +58,14 @@
         });
 
 
-        // Function //
+        // Function (여기선 event를 통해서만 실행됨) //
         /* 
             # todolist add (page에 추가) 
         */  
         function addTodo(text){
             var list = document.getElementById('todoList'); // todoList 태그의 html 정보 취득
             var item = document.createElement('li'); // ul 밑에 넣을 li 태그 미리 생성
-            item.innerHTML = '<input type="checkbox">&nbsp' + text; // 로드 or 입력한 todo 내용을 li 태그에 추가. checkbox도 innerHTML로 넣음
+            item.innerHTML = '<input type="checkbox">&nbsp' + text; // 로드 or 입력한 todo 내용을 li 태그에 추가. * checkbox 태그를 넣기 위해 innerHTML 함수로 변경
             item.classList.add('list-group-item'); // li 태그에 부트스트랩 class 추가
             list.appendChild(item); // todoList인 ul태그 밑에 li 추가
 
